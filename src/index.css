@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --gutter-v: 20px;
+  --gutter-h: 20px;
+  --header-height: 50px;
+  --footer-height: 2.5rem;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -10,6 +17,31 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #fefbf5;
+}
+
+.body { 
+  min-height: 100vh;
+  margin: 0;
+}
+
+header { 
+  min-height: var(--header-height);
+  padding: 0 var(--gutter-h);
+}
+
+footer {
+  min-height: var(--footer-height);
+  padding: 0 var(--gutter-h);
+}
+
+.body { 
+  display: flex;
+  flex-direction: column; 
+}
+
+.body-content { 
+  flex: 1;
+  padding: var(--gutter-v) var(--gutter-h);
 }
 
 code {

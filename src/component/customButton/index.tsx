@@ -6,19 +6,17 @@ export const CustomButton = ({
   className,
   disabled,
   children,
+  type,
 }: {
   label?: string;
   onClick?: () => void;
   className?: string;
   disabled?: boolean;
-  children?: JSX.Element;
+  children?: JSX.Element | string;
+  type?: 'button' | 'submit' | 'reset' | undefined;
 }): JSX.Element => {
   return (
-    <button
-      onClick={onClick}
-      className={`button ${className}`}
-      disabled={disabled}
-    >
+    <button type={type ?? 'button'} onClick={onClick} className={`button ${className}`} disabled={disabled}>
       {children || label}
     </button>
   );

@@ -48,3 +48,55 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* FORMS */
+.form__group {
+  position: relative;
+  padding: 15px 0 0;
+  margin-top: 7px;
+  width: max-content;
+}
+
+.form__field {
+  font-family: inherit;
+  width: 100%;
+  border: 0;
+  border-bottom: 1px solid black;
+  outline: 0;
+  color: black;
+  padding: 7px 0;
+  background: transparent;
+  transition: border-color 0.2s;
+}
+
+.form__group input::placeholder {
+  color: transparent;
+}
+
+input:placeholder-shown ~ .form__label {
+  cursor: text;
+  top: 20px;
+}
+
+.form__label {
+  position: absolute;
+  top: 0;
+  display: block;
+  transition: 0.2s;
+  color: black;
+}
+
+.form__field:focus {
+  padding-bottom: 6px;  
+  border-width: 2px;
+  border-image: linear-gradient(to right, black, blue);
+  border-image-slice: 1;
+}
+
+.form__field:focus ~ .form__label {
+    position: absolute;
+    top: 0;
+    display: block;
+    transition: 0.2s;
+    color: black;
+}

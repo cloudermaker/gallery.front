@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { Layout } from '../component/layout';
 import { TItem } from '../types/itemType';
 import { CustomButton } from '../component/customButton';
+import { CustomForm } from '../component/customForm';
 
 export const Backoffice = (): JSX.Element => {
   const [items, setItems] = useState<TItem[]>([]);
@@ -47,46 +48,34 @@ export const Backoffice = (): JSX.Element => {
   return (
     <Layout>
       <>
-        {/* ITEMS */}
-        <section>
-          <section className="inline-grid">
-            <span>
-              Item name:
-              <input value={newItemName} onChange={(e) => setNewItemName(e.target.value)} required />
-            </span>
+        <CustomForm
+          buttonName="Add new item"
+          onValidateClick={onAddItem}
+          fields={[
+            { name: 'Name', onFieldUpdate: (value) => setNewItemName(value), value: newItemName },
+            {
+              name: 'Description',
+              onFieldUpdate: (value) => setNewItemDescription(value),
+              value: newItemDescription,
+            },
+            { name: 'Picture url', onFieldUpdate: (value) => setNewItemPictureUrl(value), value: newItemPictureUrl },
+          ]}
+        />
 
-            <span>
-              Description:
-              <input value={newItemDescription} onChange={(e) => setNewItemDescription(e.target.value)} required />
-            </span>
+        <section className="flex">
+          <span>Item count: {items.length}</span>
 
-            <span>
-              Picture Url:
-              <input value={newItemPictureUrl} onChange={(e) => setNewItemPictureUrl(e.target.value)} required />
-            </span>
-
-            <CustomButton label="Add new item" onClick={onAddItem} />
-          </section>
-
-          <hr className="my-5" />
-
-          <section className="flex">
-            <span>Item count: {items.length}</span>
-
-            <ul>
-              {items.map((item, idx) => (
-                <li key={idx}>
-                  <>
-                    {`Item ${idx}: [name: ${item.name}, description: ${item.description}, pictureUrl: ${item.pictureUrl}]`}
-                    <CustomButton label="Remove" />
-                  </>
-                </li>
-              ))}
-            </ul>
-          </section>
+          <ul>
+            {items.map((item, idx) => (
+              <li key={idx}>
+                <>
+                  {`Item ${idx}: [name: ${item.name}, description: ${item.description}, pictureUrl: ${item.pictureUrl}]`}
+                  <CustomButton label="Remove" />
+                </>
+              </li>
+            ))}
+          </ul>
         </section>
-
-        <section></section>
       </>
     </Layout>
   );

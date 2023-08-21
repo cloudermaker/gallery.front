@@ -29,8 +29,8 @@ export const Backoffice = (): JSX.Element => {
     try {
       const response = await axios.post('http://localhost:5262/Item', {
         name: newItemName,
-        description: '',
-        pictureUrl: '',
+        description: newItemDescription,
+        pictureUrl: newItemPictureUrl,
       });
 
       if (response.status === 200) {
@@ -62,15 +62,19 @@ export const Backoffice = (): JSX.Element => {
           ]}
         />
 
-        <section className="flex">
+        <section className="">
           <span>Item count: {items.length}</span>
 
-          <ul>
+          <ul className="w-1/2">
             {items.map((item, idx) => (
-              <li key={idx}>
+              <li key={idx} className="flex justify-between">
                 <>
                   {`Item ${idx}: [name: ${item.name}, description: ${item.description}, pictureUrl: ${item.pictureUrl}]`}
-                  <CustomButton label="Remove" />
+
+                  <div>
+                    <CustomButton label="Update" />
+                    <CustomButton label="Remove" />
+                  </div>
                 </>
               </li>
             ))}

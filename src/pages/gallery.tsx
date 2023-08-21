@@ -2,15 +2,20 @@ import { useEffect, useState } from 'react';
 import { Layout } from '../component/layout';
 import { TItem } from '../types/itemType';
 import axios from 'axios';
+import { ItemList } from '../component/itemList';
+import { CustomButton } from '../component/customButton';
 
 export const Gallery = (): JSX.Element => {
   const [items, setItems] = useState<TItem[]>([]);
+  const [currentItems, setCurrentItems] = useState<TItem[]>([]);
+  const [inputSearch, setInputSearch] = useState<string>('');
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get('http://localhost:5262/Item');
         setItems(response.data);
+        setCurrentItems(response.data);
       } catch (ex) {
         console.error(ex);
       }
@@ -19,25 +24,29 @@ export const Gallery = (): JSX.Element => {
     fetchData();
   }, []);
 
+  const onSearch = (): void => {
+    setCurrentItems(items.filter((item) => item.name.toLowerCase().includes(inputSearch)));
+  };
+
   return (
     <Layout>
       <>
-        <section className="flex">
-          <input />
+        <div className="flex w-1/5">
+          <input
+            className="form__field"
+            placeholder="Search me"
+            onChange={(e) => setInputSearch(e.target.value.toLowerCase())}
+          />
 
-          <button>Search</button>
-        </section>
+          <button className="btn" type="submit" onClick={onSearch}>
+            Search
+          </button>
+        </div>
 
-        <section className="flex">
-          <span>Item count: {items.length}</span>
+        <section className="">
+          <span>Item count: {currentItems.length}</span>
 
-          <ul>
-            {items.map((item, idx) => (
-              <li
-                key={idx}
-              >{`Item ${idx}: [name: ${item.name}, description: ${item.description}, pictureUrl: ${item.pictureUrl}]`}</li>
-            ))}
-          </ul>
+          <ItemList items={currentItems} />
         </section>
       </>
     </Layout>
